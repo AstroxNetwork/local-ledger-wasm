@@ -1,0 +1,143 @@
+name: integration-test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cargo-build:
+    name: cargo-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: checkout-dfinity
+        uses: actions/checkout@v2
+        with:
+          repository: dfinity/ic
+          #    token: ${{ secrets.GH_TOKEN }}
+          path: dfinity
+
+      # - name: patch-dfinity
+      #   run: |
+      #     pushd dfinity
+      #     git apply ../patches/dfinity.patch
+      #     popd
+      - name: setup-binaryen
+        run: |
+          curl \
+            -o ${{ runner.temp }}/binaryen.deb \
+            http://archive.ubuntu.com/ubuntu/pool/universe/b/binaryen/binaryen_99-3_amd64.deb
+          sudo dpkg -i ${{ runner.temp }}/binaryen.deb
+          rm ${{ runner.temp }}/binaryen.deb
+      - name: cache
+        uses: actions/cache@v2
+        with:
+          key: 1-cargo-cache-${{ github.run_id }}
+          restore-keys: 1-cargo-cache-
+          path: |
+            ~/.cargo
+            dfinity/rs/target
+      - name: build
+        run: |
+          pushd dfinity/rs
+          rustup target add wasm32-unknown-unknown
+          cargo build --target wasm32-unknown-unknown --release --package ledger-canister --bin ledger-canister
+          wasm-opt \
+            -Oz \
+            --strip-debug \
+            target/wasm32-unknown-unknown/release/ledger-canister.wasm \
+            -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
+          popd
+      - name: artifact-upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: ledger-canister
+          path: |
+            dfinity/rs/rosetta-api/docker/dfx.json
+            dfinity/rs/rosetta-api/ledger.did
+            dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
+  # integration-test-local:
+  #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
+  #   needs: cargo-build
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       node:
+  #         - 16
+  #         - 15
+  #         - 14
+  #         - 13
+  #         - 12
+  #         - 10
+  #       sdk_ver:
+  #         - 0.7.1
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: checkout-dfinity
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: dfinity-lab/dfinity
+  #         token: ${{ secrets.GH_TOKEN }}
+  #         path: dfinity
+
+  #     - name: setup-node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #         check-latest: true
+
+  #     - name: setup-dfx
+  #       run: |
+  #         mkdir -p ~/.local/bin
+  #         echo ~/.local/bin >> $GITHUB_PATH
+  #         curl -L https://sdk.dfinity.org/downloads/dfx/${{ matrix.sdk_ver }}/x86_64-linux/dfx-${{ matrix.sdk_ver }}.tar.gz | tar xz --strip-components 1 -C ~/.local/bin
+  #     - name: cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         key: 1-cargo-cache-${{ github.run_id }}
+  #         restore-keys: 1-cargo-cache-
+  #         path: |
+  #           ~/.cargo
+  #           dfinity/rs/target
+  #     - name: test
+  #       run: |
+  #         cp dfinity/rs/target/release/ic-rosetta-api ~/.local/bin
+  #         cp \
+  #           dfinity/rs/rosetta-api/docker/dfx.json \
+  #           dfinity/rs/rosetta-api/ledger.did \
+  #           dfinity/rs/rosetta-api/log_config.yml \
+  #           dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm \
+  #           ${{ runner.temp }}
+  #         pushd ${{ runner.temp }}
+  #         dfx start \
+  #           --background \
+  #           --clean \
+  #           --host 127.0.0.1:8000 \
+  #           --no-artificial-delay
+  #         dfx deploy \
+  #           --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"a8a3746fca2b69ee144224ab735b0c0f1977d3aa44a97c75240da7ab05becea4\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
+  #           --network=local \
+  #           --no-wallet \
+  #           ledger
+  #         ic-rosetta-api \
+  #           --canister-id $(jq -r .ledger.local .dfx/local/canister_ids.json) \
+  #           --ic-url http://127.0.0.1:8000 \
+  #           --address 127.0.0.1 \
+  #           --port 8080 \
+  #           --store-type in-memory &
+  #         popd
+  #         sleep 10
+  #         npm install
+  #         npm run-script build
+  #         node --unhandled-rejections=strict ./test/test-local.js
+  #     - name: artifact-upload
+  #       uses: actions/upload-artifact@v2
+  #       if: ${{ matrix.node == 16 }}
+  #       with:
+  #         name: dist
+  #         path: dist
