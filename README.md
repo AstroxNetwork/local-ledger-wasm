@@ -9,14 +9,14 @@ Used for local testing rosetta-api.
    
    ```bash
    dfx deploy \
-            --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"a8a3746fca2b69ee144224ab735b0c0f1977d3aa44a97c75240da7ab05becea4\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
+            --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
             --network=local \
             --no-wallet \
             ledger
     ```
 
-    - Initial minting account is "ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36"
-    - Private key is "07acb84879d371491ceccb357322b264fc7703e7966686c0fd4d39cebcaffab3"
+    - account is minted to "9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9"
+    - key phrase is "steel obey anxiety vast clever relax million girl cost pond elbow bridge hill health toilet desk sleep grid boost flavor shy cry armed mass"
     - take down the "ledger" canister id.
 
     Use above for testing transaction
