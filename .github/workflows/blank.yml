@@ -50,12 +50,21 @@ jobs:
             target/wasm32-unknown-unknown/release/ledger-canister.wasm \
             -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
           popd
-      - name: artifact-upload
+      - name: artifact-upload-1
         uses: actions/upload-artifact@v2
         with:
           name: ledger-canister
           path: |
-            dfinity/rs/
+            dfinity/rs/rosetta-api/docker/dfx.json
+            dfinity/rs/rosetta-api/ledger.did
+            dfinity/rs/rosetta-api/log_config.yml
+      - name: artifact-upload-2
+        uses: actions/upload-artifact@v2
+        with:
+          name: target
+          path: |
+            dfinity/rs/target/release/ic-rosetta-api
+            dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
   #   needs: cargo-build
