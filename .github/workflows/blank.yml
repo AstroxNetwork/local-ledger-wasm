@@ -54,10 +54,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ledger-canister
-          path: |
-            dfinity/rs/rosetta-api/docker/dfx.json
-            dfinity/rs/rosetta-api/ledger.did
-            dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
+          path: dfinity/rs/rosetta-api/
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
   #   needs: cargo-build

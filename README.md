@@ -33,6 +33,9 @@ Used for local testing rosetta-api.
     --rm \
     dfinity/rosetta-api \
     --canister-id rwlgt-iiaaa-aaaaa-aaaaa-cai \
+    --ic-url http://127.0.0.1:8000 \
+    --address 127.0.0.1 \
+    --port 8080 \
     # --ic-url http://192.168.3.11:59786
     ```
 
