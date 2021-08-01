@@ -8,6 +8,7 @@ Used for local testing rosetta-api.
 2. Deploy the wasm and mint an account some local ICP token
    
    ```bash
+   rm -rf .dfx &&
    dfx deploy \
             --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
             --network=local \
@@ -32,7 +33,7 @@ Used for local testing rosetta-api.
     --rm \
     dfinity/rosetta-api \
     --canister-id rwlgt-iiaaa-aaaaa-aaaaa-cai \
-    --ic-url http://192.168.3.11:59786
+    # --ic-url http://192.168.3.11:59786
     ```
 
     - the ledger canister id
