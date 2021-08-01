@@ -54,7 +54,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ledger-canister
-          path: dfinity/rs/rosetta-api/
+          path: |
+            dfinity/rs/
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
   #   needs: cargo-build
