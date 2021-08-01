@@ -18,12 +18,11 @@ jobs:
           repository: dfinity/ic
           #    token: ${{ secrets.GH_TOKEN }}
           path: dfinity
-
-      # - name: patch-dfinity
-      #   run: |
-      #     pushd dfinity
-      #     git apply ../patches/dfinity.patch
-      #     popd
+      - name: patch-dfinity
+        run: |
+          pushd dfinity
+          git apply ../patches/dfinity.patch
+          popd
       - name: setup-binaryen
         run: |
           curl \
@@ -43,7 +42,6 @@ jobs:
         run: |
           pushd dfinity/rs
           rustup target add wasm32-unknown-unknown
-          cargo build --release --package ic-rosetta-api --bin ic-rosetta-api
           cargo build --target wasm32-unknown-unknown --release --package ledger-canister --bin ledger-canister
           wasm-opt \
             -Oz \
@@ -51,20 +49,11 @@ jobs:
             target/wasm32-unknown-unknown/release/ledger-canister.wasm \
             -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
           popd
-      - name: artifact-upload-1
-        uses: actions/upload-artifact@v2
-        with:
-          name: ledger-canister
-          path: |
-            dfinity/rs/rosetta-api/docker/dfx.json
-            dfinity/rs/rosetta-api/ledger.did
-            dfinity/rs/rosetta-api/log_config.yml
       - name: artifact-upload-2
         uses: actions/upload-artifact@v2
         with:
           name: target
           path: |
-            dfinity/rs/target/release/ic-rosetta-api
             dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
