@@ -30,12 +30,11 @@ Used for local testing rosetta-api.
     --interactive \
     --tty \
     --publish 8080:8080 \
+    --network=host \
     --rm \
     dfinity/rosetta-api \
     --canister-id rwlgt-iiaaa-aaaaa-aaaaa-cai \
-    --ic-url http://127.0.0.1:8000
-
-    # --ic-url http://192.168.3.11:59786
+    --ic-url http://192.168.3.11:59786
     ```
 
     - the ledger canister id
