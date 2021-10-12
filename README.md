@@ -10,14 +10,16 @@ Used for local testing rosetta-api.
    ```bash
    rm -rf .dfx &&
    dfx deploy \
-            --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
+            --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"a32bf2912509d0561f3394009ba5b062ac3f607d6bf171f48841ebbc5005c82a\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
             --network=local \
             --no-wallet \
             ledger
     ```
 
-    - account is minted to "9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9"
+    
     - key phrase is "steel obey anxiety vast clever relax million girl cost pond elbow bridge hill health toilet desk sleep grid boost flavor shy cry armed mass"
+    - (curve ed25519) is  "9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9", minted to in code above
+    - (curve secp256k1) is   "a32bf2912509d0561f3394009ba5b062ac3f607d6bf171f48841ebbc5005c82a" , change code above
     - take down the "ledger" canister id.
 
     Use above for testing transaction
@@ -30,13 +32,12 @@ Used for local testing rosetta-api.
     --interactive \
     --tty \
     --publish 8080:8080 \
-    --network=host \
     --rm \
     dfinity/rosetta-api \
     --canister-id rwlgt-iiaaa-aaaaa-aaaaa-cai \
-    --ic-url http://192.168.3.11:59786
+    --ic-url http://192.168.3.11:49152
     ```
-
+    # --not-whitelisted
     - the ledger canister id
     - local machine ip, use static ip, not 127.0.0.1 and use replica's port, not 8000
     - wait for `You are all caught up to block 0` hint, then you are good to go
