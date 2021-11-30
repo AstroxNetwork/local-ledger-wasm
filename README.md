@@ -16,6 +16,12 @@ Used for local testing rosetta-api.
             ledger
     ```
 
+
+   ```bash
+   dfx deploy --argument  '(record {send_whitelist=vec{}; minting_account="051b05839339f89053454a4b9865ea0452a4bffe2b1cd41f4982bad10c1e637c"; transaction_window = null; max_message_size_bytes = null; archive_options = null; initial_values = vec {record{"bdc4ee05d42cd0669786899f256c8fd7217fa71177bd1fa7b9534f568680a938"; record {e8s=100_000_000_000}}};})'   --network=local --no-wallet ledger
+   ```
+
+
     
     - key phrase is "steel obey anxiety vast clever relax million girl cost pond elbow bridge hill health toilet desk sleep grid boost flavor shy cry armed mass"
     - (curve ed25519) is  "9512b526263c0c1b89b891704e85066f10e08ec11b9639e8ae71b40290436be9", minted to in code above
