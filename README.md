@@ -10,16 +10,11 @@ Used for local testing rosetta-api.
    ```bash
    rm -rf .dfx &&
    dfx deploy \
-            --argument "record { minting_account = \"ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36\"; initial_values = vec { record { \"a32bf2912509d0561f3394009ba5b062ac3f607d6bf171f48841ebbc5005c82a\"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}}" \
+            --argument '(record { minting_account = "ea2d973e67dcbcb00f1cfb36d05d600eef68c7513c18dac8ef52d165c1d38c36"; initial_values = vec { record { "a32bf2912509d0561f3394009ba5b062ac3f607d6bf171f48841ebbc5005c82a"; record { e8s = 18446744073709551615 } } }; max_message_size_bytes = null; transaction_window = null; archive_options = null; send_whitelist = vec {}})' \
             --network=local \
             --no-wallet \
             ledger
     ```
-
-
-   ```bash
-   dfx deploy --argument  '(record {send_whitelist=vec{}; minting_account="051b05839339f89053454a4b9865ea0452a4bffe2b1cd41f4982bad10c1e637c"; transaction_window = null; max_message_size_bytes = null; archive_options = null; initial_values = vec {record{"bdc4ee05d42cd0669786899f256c8fd7217fa71177bd1fa7b9534f568680a938"; record {e8s=100_000_000_000}}};})'   --network=local --no-wallet ledger
-   ```
 
 
     
@@ -30,7 +25,7 @@ Used for local testing rosetta-api.
 
     Use above for testing transaction
 
-3. Run Rosetta-api, [document here](https://sdk.dfinity.org/docs/integration/ledger-quick-start.html), pay attention to the IP down there, use it for your LAN network.
+3. Run Rosetta-api, {document here](https://sdk.dfinity.org/docs/integration/ledger-quick-start.html), pay attention to the IP down there, use it for your LAN network.
     
 
     ```bash

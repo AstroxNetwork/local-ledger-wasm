@@ -1,5 +1,16 @@
 // This is the official Ledger interface that is guaranteed to be backward compatible.
 
+type Duration = record {
+  secs: nat64;
+  nanos: nat32;
+};
+
+type ArchiveOptions = record {
+  node_max_memory_size_bytes: opt nat64;
+  max_message_size_bytes: opt nat64;
+  controller_id: principal;
+};
+
 // Amount of tokens, measured in 10^-8 of a token.
 type Tokens = record {
      e8s : nat64;
@@ -76,7 +87,16 @@ type AccountBalanceArgs = record {
     account: AccountIdentifier;
 };
 
-service : {
+type LedgerCanisterInitPayload = record {
+  minting_account: text;
+  initial_values: vec record {text; Tokens};
+  max_message_size_bytes: opt nat32;
+  transaction_window: opt Duration;
+  archive_options: opt ArchiveOptions;
+  send_whitelist: vec principal;
+};
+
+service : (LedgerCanisterInitPayload) ->{
   // Transfers tokens from a subaccount of the caller to the destination address.
   // The source address is computed from the principal of the caller and the specified subaccount.
   // When successful, returns the index of the block containing the transaction.
