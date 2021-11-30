@@ -35,7 +35,7 @@ Used for local testing rosetta-api.
     --rm \
     dfinity/rosetta-api \
     --canister-id rwlgt-iiaaa-aaaaa-aaaaa-cai \
-    --ic-url http://192.168.3.11:49152
+    --ic-url http://localhost:8000
     ```
     # --not-whitelisted
     - the ledger canister id
