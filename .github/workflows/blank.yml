@@ -48,12 +48,23 @@ jobs:
             target/wasm32-unknown-unknown/release/ledger-canister.wasm \
             -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
           popd
+      - name: build-nns
+        run: |
+          pushd dfinity/rs
+          cargo build --target wasm32-unknown-unknown --release --package ic-nns-governance --bin ic-nns-governance
+          wasm-opt \
+            -Oz \
+            --strip-debug \
+            target/wasm32-unknown-unknown/release/governance-canister.wasm \
+            -o target/wasm32-unknown-unknown/release/governance-canister.wasm
+          popd
       - name: artifact-upload-2
         uses: actions/upload-artifact@v2
         with:
           name: target
           path: |
             dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
+            dfinity/rs/target/wasm32-unknown-unknown/release/governance-canister.wasm
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
   #   needs: cargo-build
