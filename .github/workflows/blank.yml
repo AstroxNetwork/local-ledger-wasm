@@ -37,21 +37,21 @@ jobs:
           path: |
             ~/.cargo
             dfinity/rs/target
-      - name: build
-        run: |
-          pushd dfinity/rs
-          rustup target add wasm32-unknown-unknown
-          cargo build --target wasm32-unknown-unknown --release --package ledger-canister --bin ledger-canister
-          wasm-opt \
-            -Oz \
-            --strip-debug \
-            target/wasm32-unknown-unknown/release/ledger-canister.wasm \
-            -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
-          popd
+      # - name: build
+      #   run: |
+      #     pushd dfinity/rs
+      #     rustup target add wasm32-unknown-unknown
+      #     cargo build --target wasm32-unknown-unknown --release --package ledger-canister --bin ledger-canister
+      #     wasm-opt \
+      #       -Oz \
+      #       --strip-debug \
+      #       target/wasm32-unknown-unknown/release/ledger-canister.wasm \
+      #       -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
+      #     popd
       - name: build-nns
         run: |
           pushd dfinity/rs
-          cargo build --target wasm32-unknown-unknown --release --package ic-nns-governance --bin ic-nns-governance
+          cargo build --target wasm32-unknown-unknown --release --package ic-nns-governance --bin governance-canister
           wasm-opt \
             -Oz \
             --strip-debug \
@@ -63,8 +63,8 @@ jobs:
         with:
           name: target
           path: |
-            dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
             dfinity/rs/target/wasm32-unknown-unknown/release/governance-canister.wasm
+  # dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
   #   needs: cargo-build
