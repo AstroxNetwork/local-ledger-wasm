@@ -42,7 +42,7 @@ jobs:
           pushd dfinity/rs
           rustup target add wasm32-unknown-unknown
           cargo install --version 0.3.2 ic-cdk-optimizer
-          cargo build --target wasm32-unknown-unknown --release --p ledger-canister
+          cargo build --target wasm32-unknown-unknown --release -p ledger-canister
           ic-cdk-optimizer -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
           popd
       - name: artifact-upload-2
