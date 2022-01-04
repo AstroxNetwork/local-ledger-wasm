@@ -61,7 +61,6 @@ jobs:
         with:
           name: target
           path: |
-            dfinity/rs/target/wasm32-unknown-unknown/release/governance-canister.wasm
             dfinity/rs/target/wasm32-unknown-unknown/release/ledger-canister.wasm
   # integration-test-local:
   #   name: integration-test-local-node-${{ matrix.node }}-sdk-${{ matrix.sdk_ver }}
