@@ -44,17 +44,6 @@ jobs:
           cargo install --version 0.3.2 ic-cdk-optimizer
           cargo build --target wasm32-unknown-unknown --release --p ledger-canister
           ic-cdk-optimizer -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
-        # cargo build --target wasm32-unknown-unknown --release --package ic-nns-governance --bin governance-canister
-        # wasm-opt \
-        #   -Oz \
-        #   --strip-debug \
-        #   target/wasm32-unknown-unknown/release/ledger-canister.wasm \
-        #   -o target/wasm32-unknown-unknown/release/ledger-canister.wasm
-        # wasm-opt \
-        #   -Oz \
-        #   --strip-debug \
-        #   target/wasm32-unknown-unknown/release/governance-canister.wasm \
-        #   -o target/wasm32-unknown-unknown/release/governance-canister.wasm
           popd
       - name: artifact-upload-2
         uses: actions/upload-artifact@v2
