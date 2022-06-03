@@ -9,6 +9,9 @@
 	"defaults": {
 		"build": {
 			"packtool": ""
+		},
+		"replica": {
+			"subnet_type": "system"
 		}
 	},
 	"networks": {
@@ -17,11 +20,15 @@
 			"type": "ephemeral"
 		},
 		"messaging": {
-			"providers": ["http://10.12.36.13:8080"],
+			"providers": [
+				"http://10.12.36.13:8080"
+			],
 			"type": "persistent"
 		},
 		"mainnet": {
-			"providers": ["https://identity.ic0.app"],
+			"providers": [
+				"https://identity.ic0.app"
+			],
 			"type": "persistent"
 		}
 	},
